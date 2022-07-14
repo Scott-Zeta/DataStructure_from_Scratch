@@ -12,8 +12,8 @@ public class D_Array<T> {
         arr = (T[]) new Object[capacity];
     }
 
-    public D_Array(){
-        this(16); //default capacity without parameters
+    public D_Array() {
+        this(16); // default capacity without parameters
     }
 
     public int size() {
@@ -24,53 +24,93 @@ public class D_Array<T> {
         return size() == 0;
     }
 
-    public T get(int index){
-        if(index > len-1 || index < 0) throw new IndexOutOfBoundsException();
+    public T get(int index) {
+        if (index > len - 1 || index < 0)
+            throw new IndexOutOfBoundsException();
         return arr[index];
     }
 
-    public void set(int index, T element){
-        if(index > len-1 || index < 0) throw new IndexOutOfBoundsException();
+    public void set(int index, T element) {
+        if (index > len - 1 || index < 0)
+            throw new IndexOutOfBoundsException();
         arr[index] = element;
     }
 
-    public void add(T element){
-        if(len + 1 > capacity){
-            if(capacity == 0){
+    public void add(T element) {
+        if (len + 1 > capacity) {
+            if (capacity == 0) {
                 capacity = 1;
-            }else{
+            } else {
                 capacity *= 2;
             }
             T[] new_arr = (T[]) new Object[capacity];
-            for(int i = 0; i < len; i++){
+            for (int i = 0; i < len; i++) {
                 new_arr[i] = arr[i];
             }
-            arr = new_arr;//new array with twice larger capacity
+            arr = new_arr;// new array with twice larger capacity
         }
         arr[len] = element;
         len++;
     }
 
-    public void clear(){
-        for(int i = 0; i < capacity; i++){
+    public void clear() {
+        for (int i = 0; i < capacity; i++) {
             arr[i] = null;
         }
         len = 0;
     }
 
-    //remove and pop out the removed element
-    public T removeAt(int index){
-        if(index < 0 || index > len - 1) throw new IndexOutOfBoundsException();
+    // remove and pop out the removed element
+    public T removeAt(int index) {
+        if (index < 0 || index > len - 1)
+            throw new IndexOutOfBoundsException();
         T popout = arr[index];
         T[] new_arr = (T[]) new Object[len - 1];
-        for(int i = 0, j = 0; i < len; i++, j++){
-            if (i == index){
-                i++;
+        for (int i = 0, j = 0; i < len; i++, j++) {
+            if (i == index) {
+                i++; // skip the element needs to be removed, copy other elements
             }
             new_arr[j] = arr[i];
         }
         arr = new_arr;
         capacity = len--;
         return popout;
+    }
+
+    public boolean remove(Object element) {
+        for (int i = 0; i < len; i++) {
+            if(arr[i].equals(element)){
+                removeAt(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int indexOf(Object element){
+        for (int i = 0; i < len; i++) {
+            if(arr[i].equals(element)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public boolean contains(Object element){
+        return indexOf(element) != -1;
+    }
+
+    @Override
+    public String toString(){
+        if(len == 0){
+            return "[]";
+        }else{
+            StringBuilder arrToString = new StringBuilder().append("[");
+            for (int i = 0; i<len-1; i++){
+                arrToString.append(arr[i] + ", ");
+            }
+            arrToString.append(arr[len - 1] + "]");
+            return arrToString.toString();
+        }
     }
 }
