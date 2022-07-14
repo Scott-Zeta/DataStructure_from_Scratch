@@ -13,6 +13,13 @@ public class Test {
         System.out.println("size of array:" + arr1.size());
         arr1.clear();
         System.out.println("size of array:" + arr1.size());
+
+        arr1.add(1);
+        arr1.add(2);
+        arr1.add(3);
+        arr1.removeAt(1);
+        System.out.println("element from index 0? " + arr1.get(0));
+        System.out.println("element from index 1? " + arr1.get(1));
         System.out.println("Done");
     }
 }

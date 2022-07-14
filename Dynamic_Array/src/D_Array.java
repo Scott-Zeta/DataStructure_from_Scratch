@@ -25,12 +25,12 @@ public class D_Array<T> {
     }
 
     public T get(int index){
-        if(index > len-1) throw new IndexOutOfBoundsException();
+        if(index > len-1 || index < 0) throw new IndexOutOfBoundsException();
         return arr[index];
     }
 
     public void set(int index, T element){
-        if(index > len-1) throw new IndexOutOfBoundsException();
+        if(index > len-1 || index < 0) throw new IndexOutOfBoundsException();
         arr[index] = element;
     }
 
@@ -56,5 +56,21 @@ public class D_Array<T> {
             arr[i] = null;
         }
         len = 0;
+    }
+
+    //remove and pop out the removed element
+    public T removeAt(int index){
+        if(index < 0 || index > len - 1) throw new IndexOutOfBoundsException();
+        T popout = arr[index];
+        T[] new_arr = (T[]) new Object[len - 1];
+        for(int i = 0, j = 0; i < len; i++, j++){
+            if (i == index){
+                i++;
+            }
+            new_arr[j] = arr[i];
+        }
+        arr = new_arr;
+        capacity = len--;
+        return popout;
     }
 }
