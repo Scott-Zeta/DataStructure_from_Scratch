@@ -1,7 +1,7 @@
 Dynamic Array from scratch.
-It is simmilar to Java built-in ArrayList.
-When add elements and capacity is not enought, it will double its capacity and copy old static array to a new one.
-When remove an element, it will copy old array to new one except the removed element, then reduce the length.
+> It is simmilar to Java built-in ArrayList.
+> When add elements and capacity is not enought, it will double its capacity and copy old static array to a new one.
+> When remove an element, it will copy old array to new one except the removed element, then reduce the length.
 
 ## Getting Started
 
