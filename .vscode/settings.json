@@ -1,0 +1,6 @@
+{
+    "java.project.sourcePaths": [
+        "Dynamic_Array/src",
+        "Double_LinkList/src"
+    ]
+}
