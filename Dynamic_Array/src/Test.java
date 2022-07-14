@@ -1,3 +1,4 @@
+@SuppressWarnings("unchecked")
 public class Test {
     public static void main(String[] args) throws Exception {
         D_Array arr1 = new D_Array<>();
