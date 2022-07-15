@@ -32,6 +32,6 @@ public class Stack <T> {
 
    public T peek(){
     if(isEmpty()) throw new EmptyStackException();
-    return list.peekLast();
+    return list.peekFirst();
    }
 }

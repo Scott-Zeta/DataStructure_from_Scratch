@@ -6,7 +6,8 @@ public class Test {
         System.out.println("current size: " + stack1.size());
         System.out.println("should be BBB:" + stack1.peek());
         System.out.println("BBB been pop out:" + stack1.pop());
-        System.out.println("should be AAA:" + stack1.peek());
+        stack1.push("CCC");
+        System.out.println("should be CCC:" + stack1.peek());
         System.out.println("empty? should not:" + stack1.isEmpty());
         System.out.println("Done");
     }
