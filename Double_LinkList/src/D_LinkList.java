@@ -1,5 +1,3 @@
-import javax.management.RuntimeErrorException;
-
 public class D_LinkList<T> {
     private class Node<Y> {
         T data;
@@ -148,26 +146,66 @@ public class D_LinkList<T> {
         return data;
     }
 
-    public T removeAt(int index){
-        if(index < 0 || index >= size){
+    public T removeAt(int index) {
+        if (index < 0 || index >= size) {
             throw new IllegalArgumentException();
         }
 
         Node<T> pinpoint;
-        if(index<size/2){
-            //if the index is at first half of link list
+        if (index < size / 2) {
+            // if the index is at first half of link list
             pinpoint = head;
-            for (int i = 0; i != index; i++){
+            for (int i = 0; i != index; i++) {
                 pinpoint = pinpoint.next;
             }
-        }else{
-            //index is at second half of link list
+        } else {
+            // index is at second half of link list
             pinpoint = tail;
-            for (int i = size - 1; i !=index;i--){
+            for (int i = size - 1; i != index; i--) {
                 pinpoint = pinpoint.prev;
             }
         }
 
         return remove(pinpoint);
+    }
+
+    public boolean remove(Object element) {
+        for (Node<T> pinpoint = head; pinpoint != null; pinpoint = pinpoint.next) {
+            if (element.equals(pinpoint.data)) {
+                remove(pinpoint);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int indexOf(Object element) {
+        int index = 0;
+        for (Node<T> pinpoint = head; pinpoint != null; pinpoint = pinpoint.next, index++) {
+            if (element.equals(pinpoint.data)) {
+                return index;
+            }
+        }
+        return -1;
+    }
+
+    public boolean contains(Object element) {
+        return indexOf(element) != -1;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append("[");
+        Node<T> pinpoint = head;
+        while (pinpoint != null) {
+            result.append(pinpoint.data.toString());
+            if (pinpoint.next != null) {
+                result.append(",");
+            }
+            pinpoint = pinpoint.next;
+        }
+        result.append("]");
+        return result.toString();
     }
 }
