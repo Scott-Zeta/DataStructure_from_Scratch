@@ -1,35 +1,66 @@
 import java.util.List;
 import java.util.ArrayList;
 
-public class P_Queue <T extends Comparable<T>>{
+public class P_Queue<T extends Comparable<T>> {
     private List<T> heap;
 
-    public P_Queue(int size){
+    public P_Queue(int size) {
         heap = new ArrayList<T>(size);
     }
 
-    public P_Queue(){
+    public P_Queue() {
         this(1);
     }
 
-    public int size(){
+    public int size() {
         return heap.size();
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return size() == 0;
     }
 
-    public T peek(){
+    public T peek() {
         return heap.get(0);
     }
 
-    public boolean contains(T element){
-        for (int i = 0; i < size(); i++){
-            if(heap.get(i).equals(element)){
+    public boolean contains(T element) {
+        for (int i = 0; i < size(); i++) {
+            if (heap.get(i).equals(element)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean lessOrEqual(int index1, int index2) {
+        T node1 = heap.get(index1);
+        T node2 = heap.get(index2);
+        return node1.compareTo(node2) <= 0;
+    }
+
+    public void swap(int index1, int index2) {
+        T temp = heap.get(index1);
+        heap.set(index1, heap.get(index2));
+        heap.set(index2, temp);
+    }
+
+    public boolean isP_Queue(int root) {
+        if (root > size()) {
+            return true;
+        }
+
+        int left = 2 * root + 1;
+        int right = 2 * root + 2;
+
+        if(left < size() && !lessOrEqual(root, left)){
+            return false;
+        }
+
+        if(right < size() && !lessOrEqual(root, right)){
+            return false;
+        }
+
+        return isP_Queue(left) && isP_Queue(right);
     }
 }
