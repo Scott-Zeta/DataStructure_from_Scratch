@@ -53,14 +53,43 @@ public class P_Queue<T extends Comparable<T>> {
         int left = 2 * root + 1;
         int right = 2 * root + 2;
 
-        if(left < size() && !lessOrEqual(root, left)){
+        if (left < size() && !lessOrEqual(root, left)) {
             return false;
         }
 
-        if(right < size() && !lessOrEqual(root, right)){
+        if (right < size() && !lessOrEqual(root, right)) {
             return false;
         }
 
         return isP_Queue(left) && isP_Queue(right);
+    }
+
+    public void rise(int pinpoint) {
+        int parent = (pinpoint - 1) / 2;
+
+        while (pinpoint > 0 && !lessOrEqual(parent, pinpoint)) {
+            swap(parent, pinpoint);
+            pinpoint = parent;
+            parent = (pinpoint - 1) / 2;
+        }
+    }
+
+    public void fall(int pinpoint) {
+        while (true) {
+            int left = pinpoint * 2 + 1;
+            int right = pinpoint * 2 + 2;
+
+            int smaller = left;
+            if (right < size() && lessOrEqual(right, left)){
+                smaller = right;
+            }
+
+            if (smaller >= size() || lessOrEqual(pinpoint, smaller)){
+                break;
+            }
+
+            swap(pinpoint, smaller);
+            pinpoint = smaller;
+        }
     }
 }
