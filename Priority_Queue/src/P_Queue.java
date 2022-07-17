@@ -80,11 +80,11 @@ public class P_Queue<T extends Comparable<T>> {
             int right = pinpoint * 2 + 2;
 
             int smaller = left;
-            if (right < size() && lessOrEqual(right, left)){
+            if (right < size() && lessOrEqual(right, left)) {
                 smaller = right;
             }
 
-            if (smaller >= size() || lessOrEqual(pinpoint, smaller)){
+            if (smaller >= size() || lessOrEqual(pinpoint, smaller)) {
                 break;
             }
 
@@ -93,40 +93,55 @@ public class P_Queue<T extends Comparable<T>> {
         }
     }
 
-    public void add(T element){
-        if(element == null) throw new IllegalArgumentException();
+    public void add(T element) {
+        if (element == null)
+            throw new IllegalArgumentException();
         heap.add(element);
         rise(size() - 1);
     }
 
-    public T removeAt(int index){
-        if(isEmpty() || index >= size()){
+    public T poll() {
+        return removeAt(0);
+    }
+
+    public T removeAt(int index) {
+        if (isEmpty() || index >= size()) {
             return null;
         }
 
         int lastIndex = size() - 1;
         T data_return = heap.get(index);
-        
-        //if it is the last element
-        if (index == lastIndex){
+
+        // if it is the last element
+        if (index == lastIndex) {
             heap.remove(lastIndex);
             return data_return;
         }
-        //if not, swap last and target, remove target,then rise or fall i.
+        // if not, swap last and target, remove target,then rise or fall i.
         swap(lastIndex, index);
         heap.remove(lastIndex);
 
-        int parent = (index - 1) / 2;
-        if(!lessOrEqual(index, parent)){
-            fall(index);
-        }else{
-            rise(index);
-        }
+        fall(index);
+        rise(index);
         return data_return;
     }
 
+    public boolean remove(T element) {
+        if (element == null) {
+            return false;
+        }
+        // linear seach to finde the element waiting for remove, can be imporved
+        for (int i = 0; i < size(); i++) {
+            if (element.equals(heap.get(i))) {
+                removeAt(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
-    public String toString(){
+    public String toString() {
         return heap.toString();
     }
 }

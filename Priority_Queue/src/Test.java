@@ -17,6 +17,19 @@ public class Test {
         System.out.println("is it still minHeap? " + minqueue.isP_Queue(0));
         System.out.println("what size? should be 6 " + minqueue.size());
         System.out.println(minqueue.toString());
+        minqueue.add(23);
+        minqueue.add(-6);
+        minqueue.add(-83);
+        minqueue.add(-29);
+        minqueue.add(35);
+        System.out.println(minqueue.toString());
+        System.out.println("should poll -83: " + minqueue.poll());
+        System.out.println("next should be -29: " + minqueue.peek());
+        System.out.println("is it still minHeap? " + minqueue.isP_Queue(0));
+        System.out.println(minqueue.toString());
+        while(minqueue.size() > 0){
+            System.out.print(minqueue.poll() + ",");
+        }
         System.out.println("Done");
     }
 }
