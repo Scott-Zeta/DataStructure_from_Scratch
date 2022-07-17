@@ -92,4 +92,10 @@ public class P_Queue<T extends Comparable<T>> {
             pinpoint = smaller;
         }
     }
+
+    public void add(T element){
+        if(element == null) throw new IllegalArgumentException();
+        heap.add(element);
+        rise(size() - 1);
+    }
 }
