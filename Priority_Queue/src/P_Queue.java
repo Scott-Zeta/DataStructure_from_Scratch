@@ -98,4 +98,35 @@ public class P_Queue<T extends Comparable<T>> {
         heap.add(element);
         rise(size() - 1);
     }
+
+    public T removeAt(int index){
+        if(isEmpty() || index >= size()){
+            return null;
+        }
+
+        int lastIndex = size() - 1;
+        T data_return = heap.get(index);
+        
+        //if it is the last element
+        if (index == lastIndex){
+            heap.remove(lastIndex);
+            return data_return;
+        }
+        //if not, swap last and target, remove target,then rise or fall i.
+        swap(lastIndex, index);
+        heap.remove(lastIndex);
+
+        int parent = (index - 1) / 2;
+        if(!lessOrEqual(index, parent)){
+            fall(index);
+        }else{
+            rise(index);
+        }
+        return data_return;
+    }
+
+    @Override
+    public String toString(){
+        return heap.toString();
+    }
 }
