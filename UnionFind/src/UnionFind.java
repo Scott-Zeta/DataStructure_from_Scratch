@@ -25,7 +25,7 @@ public class UnionFind {
         return size;
     }
 
-    public int groupNum(){
+    public int groupNum() {
         return groupNum;
     }
 
@@ -54,4 +54,25 @@ public class UnionFind {
         return false;
     }
 
+    public void union(int p1, int p2) {
+        if (connected(p1, p2)) {
+            return;
+        }
+
+        int root1 = find(p1);
+        int root2 = find(p2);
+
+        // merge smaller to larger one
+        if (componentSize[root1] < componentSize[root2]) {
+            componentSize[root2] += componentSize[root1];
+            group[root1] = root2;
+            componentSize[root1] = 0;
+        } else {
+            componentSize[root1] += componentSize[root2];
+            group[root2] = root1;
+            componentSize[root2] = 0;
+        }
+
+        groupNum--;
+    }
 }
