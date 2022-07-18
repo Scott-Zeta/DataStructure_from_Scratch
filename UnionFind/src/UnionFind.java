@@ -48,7 +48,7 @@ public class UnionFind {
 
     public boolean connected(int p1, int p2) {
         if (find(p1) == find(p2)) {
-            System.out.println("loop detected");
+            System.out.println("cycle detected");
             return true;
         }
         return false;
