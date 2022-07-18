@@ -23,6 +23,16 @@ public class UnionFind {
         while(root != group[root]){
             root = group[root];
         }
+
+        //compress the path to the root by following the parent node.
+        //every node on chain will point to the root node directly.
+        while(component != root){
+            int parent = group[component];
+            group[component] = root;
+            component = parent;
+        }
         return root;
     }
+
+
 }
