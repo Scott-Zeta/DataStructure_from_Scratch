@@ -16,4 +16,13 @@ public class UnionFind {
             componentSize[i] = 1; //each group have only one component. itself
         }
     }
+
+    public int find(int component){
+        //find the component's root it belongs to.
+        int root = component;
+        while(root != group[root]){
+            root = group[root];
+        }
+        return root;
+    }
 }
