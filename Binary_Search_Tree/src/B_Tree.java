@@ -46,7 +46,8 @@ public class B_Tree<T extends Comparable<T>> {
             System.out.println("element has already exist");
             return false;
         } else {
-            add(element, root);
+            root = add(element, root);
+            size++;
             return true;
         }
     }
@@ -64,4 +65,17 @@ public class B_Tree<T extends Comparable<T>> {
         }
         return node;// return the new node to its parents left or right
     }
+
+    public void traversal(){
+        inOrder(root);
+    }
+
+    private void inOrder(Node root){
+        if (root == null){
+            return;
+        }
+        inOrder(root.left);
+        System.out.print(root.data + ", ");
+        inOrder(root.right);
+    } 
 }
