@@ -81,7 +81,7 @@ public class B_Tree<T extends Comparable<T>> {
 
     public boolean remove(T element) {
         if (contains(element)) {
-            root = remove(element, root);
+            root = remove(element, root); // connected to parent
             size--;
             return true;
         }
@@ -89,6 +89,27 @@ public class B_Tree<T extends Comparable<T>> {
     }
 
     private Node remove(T element, Node node) {
+        if (node == null) {
+            return null;
+        }
+        int compare = element.compareTo(node.data);
+        if (compare < 0) {
+            node.left = remove(element, node.left);
+        } else if (compare > 0) {
+            node.right = remove(element, node.right);
+        } else {
+            // if only have one child subtree, remove and connect directly
+            if (node.right == null) {
+                return node.left;
+            } else if (node.left == null) {
+                return node.right;
+            } else {
+                //if have two branch, use left largest or right smallest as candidate
+                Node candidate = max(node.left);
+                node.data = candidate.data;//copy the candidate's data to current one.
+                node.left = remove(candidate.data, node.left);//remove the swaped node
+            }
+        }
         return node;
     }
 
