@@ -66,16 +66,44 @@ public class B_Tree<T extends Comparable<T>> {
         return node;// return the new node to its parents left or right
     }
 
-    public void traversal(){
+    public void traversal() {
         inOrder(root);
     }
 
-    private void inOrder(Node root){
-        if (root == null){
+    private void inOrder(Node root) {
+        if (root == null) {
             return;
         }
         inOrder(root.left);
         System.out.print(root.data + ", ");
         inOrder(root.right);
-    } 
+    }
+
+    public boolean remove(T element) {
+        if (contains(element)) {
+            root = remove(element, root);
+            size--;
+            return true;
+        }
+        return false;
+    }
+
+    private Node remove(T element, Node node) {
+        return node;
+    }
+
+    // help find min or max candidate
+    private Node min(Node node) {
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node;
+    }
+
+    private Node max(Node node) {
+        while (node.right != null) {
+            node = node.right;
+        }
+        return node;
+    }
 }
