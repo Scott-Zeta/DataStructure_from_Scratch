@@ -41,17 +41,27 @@ public class B_Tree<T extends Comparable<T>> {
         }
     }
 
+    public boolean add(T element) {
+        if (contains(element)) {
+            System.out.println("element has already exist");
+            return false;
+        } else {
+            add(element, root);
+            return true;
+        }
+    }
+
     private Node add(T element, Node node) {
         if (node == null) {
             node = new Node(element, null, null);
             // when no node at this position, add it.
         } else {
             if (element.compareTo(node.data) < 0) {
-                node.left = add(element, node.left); 
+                node.left = add(element, node.left);
             } else {
-                node.right = add(element, node.right); //keep going deeper until reach the null.
+                node.right = add(element, node.right); // keep going deeper until reach the null.
             }
         }
-        return node;//return the new node to its parents left or right
+        return node;// return the new node to its parents left or right
     }
 }
