@@ -44,14 +44,14 @@ public class B_Tree<T extends Comparable<T>> {
     private Node add(T element, Node node) {
         if (node == null) {
             node = new Node(element, null, null);
-            // when no node in the tree, add as root.
+            // when no node at this position, add it.
         } else {
             if (element.compareTo(node.data) < 0) {
-                node.left = add(element, node.left); // return to its parent
+                node.left = add(element, node.left); 
             } else {
-                node.right = add(element, node.right);
+                node.right = add(element, node.right); //keep going deeper until reach the null.
             }
         }
-        return node;
+        return node;//return the new node to its parents left or right
     }
 }
