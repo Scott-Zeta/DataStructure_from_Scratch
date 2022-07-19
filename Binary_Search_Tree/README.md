@@ -1,3 +1,5 @@
+This is a simple binary tree, it doesn't have function like re-balancing. So in worst case, it could work linearly(All node in a row).
+
 ## Getting Started
 
 Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
