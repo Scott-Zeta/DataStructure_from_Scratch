@@ -26,7 +26,7 @@ class Entry<K, V> {
     }
 }
 
-public class Chain_HashTable {
+public class Chain_HashTable<K,V> {
     //load factor = number of entries / total size of array or table slot
     // 0.5 load factor = half full, conllision relavent.
     private static final int Deafault_Capacity = 3;
@@ -36,5 +36,18 @@ public class Chain_HashTable {
     private int capacity;
     private int threshold;
     private int size;
-    private LinkedList<Entry> slot; //the list contains entries with same slot
+    private LinkedList<Entry<K,V>>[] slotArray; //the list contains entries with same slot
+
+    public Chain_HashTable(int capacity, double maxLoadFactor){
+        if(capacity<0) throw new IllegalArgumentException("Illegal capacity");
+        //prevent it from negative, x/0 = infinite, sqrt(-1) = imaginary number
+        if(maxLoadFactor <=0 || Double.isNaN(maxLoadFactor) || Double.isInfinite(maxLoadFactor)) 
+            throw new IllegalArgumentException("Illegal maxLoadFactor");
+        this.maxLoadFactor = maxLoadFactor;
+        this.capacity = Math.max(capacity,Deafault_Capacity);
+        //When over the threshold, like LoadFactor =0.75, 100 slots with 75 full, expand the hash table and do something else
+        threshold = (int)(this.capacity * maxLoadFactor);
+        //for each slot, a new linkedList for chain.
+        slotArray = new LinkedList[this.capacity];
+    }
 }
