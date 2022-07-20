@@ -27,5 +27,14 @@ class Entry<K, V> {
 }
 
 public class Chain_HashTable {
+    //load factor = number of entries / total size of array or table slot
+    // 0.5 load factor = half full, conllision relavent.
+    private static final int Deafault_Capacity = 3;
+    private static final double Deafault_Load_Factor = 0.75;
 
+    private double maxLoadFactor;
+    private int capacity;
+    private int threshold;
+    private int size;
+    private LinkedList<Entry> slot; //the list contains entries with same slot
 }
