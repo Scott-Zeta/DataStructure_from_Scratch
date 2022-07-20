@@ -9,6 +9,11 @@ public class Test {
         tree1.add(6);
         System.out.println(tree1.contains(5));
         tree1.traversal();
+        System.out.println();
+        tree1.remove(8);
+        tree1.remove(5);
+        tree1.add(8);
+        tree1.traversal();
         System.out.println("Done");
     }
 }
