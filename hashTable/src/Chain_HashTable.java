@@ -136,4 +136,30 @@ public class Chain_HashTable<K, V> {
         }
         return null;
     }
+
+    public V add(K key,V value){
+        if(key == null)throw new IllegalArgumentException("Key can not be null.");
+        Entry<K,V> newEntry = new Entry<>(key, value);
+        int slotIndex = normalizeIndex(key.hashCode());
+        return InsertSlot(slotIndex, newEntry);
+    }
+
+    private V InsertSlot(int slotIndex, Entry<K,V> newEntry){
+        LinkedList<Entry<K,V>> targetSlot = slotArray[slotIndex];
+        if (targetSlot == null){
+            slotArray[slotIndex] = new LinkedList<>();
+            targetSlot = slotArray[slotIndex];
+        }
+        Entry<K,V> currentEntry = searchEntryInSlot(slotIndex, newEntry.key);
+        //see if current Entry exsist
+        if(currentEntry == null){
+            targetSlot.add(newEntry);
+            return null;
+        }else{
+            V oldValue = currentEntry.value;
+            currentEntry.value = newEntry.value;
+            System.out.println("exsist entry has been updated");
+            return oldValue;
+        }
+    }
 }
