@@ -107,7 +107,10 @@ public class Chain_HashTable<K, V> {
         Entry<K,V> entry = searchEntryInSlot(slotIndex, key);
         if(entry != null){
             V value = entry.value;
-            slotArray[slotIndex].remove(entry);
+            //since linkedlist and similar datastruture is actually a memeory address, like a pointer to particalur info.
+            //So remove the element in the new list that point to the same address will also work for the original list.
+            LinkedList<Entry<K,V>> links = slotArray[slotIndex];
+            links.remove(entry);
             size--;
             return value;
         }else{
