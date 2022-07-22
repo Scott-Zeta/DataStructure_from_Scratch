@@ -75,10 +75,15 @@ public class Chain_HashTable<K, V> {
         size = 0;
     }
 
+    public boolean containsKey(K key){
+        int slotIndex = normalizeIndex(key.hashCode());
+        return searchEntryInSlot(slotIndex, key) != null;
+    }
+
     private int normalizeIndex(int keyHash) {
         return (keyHash & 0x7FFFFFFF) % capacity;
         // strip off the negative number by bit operation &, then get the index of the
-        // slot
+        // slot by mod the key's hash code.
     }
 
     private Entry<K, V> searchEntryInSlot(int slotIndex, K key) {
