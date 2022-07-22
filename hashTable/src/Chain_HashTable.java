@@ -215,5 +215,23 @@ public class Chain_HashTable<K, V> {
             }
         }
         return values;
-    }    
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder result = new StringBuilder();
+        result.append("{");
+        for (int i = 0; i < slotArray.length; i++) {
+            if (slotArray[i] == null) {
+                continue;
+            } else {
+                for (Entry<K, V> entry : slotArray[i]) {
+                    result.append(entry + ", ");
+                }
+            }
+            result.append("}");
+        }
+        return result.toString();
+    }
 }
