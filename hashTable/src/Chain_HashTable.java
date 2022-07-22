@@ -227,7 +227,7 @@ public class Chain_HashTable<K, V> {
                 continue;
             } else {
                 for (Entry<K, V> entry : slotArray[i]) {
-                    result.append(entry + ", ");
+                    result.append(entry.toString() + ", ");
                 }
             }
             result.append("}");
