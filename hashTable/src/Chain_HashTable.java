@@ -192,4 +192,28 @@ public class Chain_HashTable<K, V> {
         }
         slotArray = newSlotArray;
     }
+
+    public List<K> keys() {
+        List<K> keys = new ArrayList<>();
+        for (LinkedList<Entry<K, V>> slots : slotArray) {
+            if (slots != null) {
+                for (Entry<K, V> entry : slots) {
+                    keys.add(entry.key);
+                }
+            }
+        }
+        return keys;
+    }
+
+    public List<V> values() {
+        List<V> values = new ArrayList<>();
+        for (LinkedList<Entry<K, V>> slots : slotArray) {
+            if (slots != null) {
+                for (Entry<K, V> entry : slots) {
+                    values.add(entry.value);
+                }
+            }
+        }
+        return values;
+    }    
 }
