@@ -75,7 +75,7 @@ public class Chain_HashTable<K, V> {
         size = 0;
     }
 
-    public boolean containsKey(K key){
+    public boolean containsKey(K key) {
         int slotIndex = normalizeIndex(key.hashCode());
         return searchEntryInSlot(slotIndex, key) != null;
     }
@@ -108,18 +108,32 @@ public class Chain_HashTable<K, V> {
         return removeInSlot(slotindex, key);
     }
 
-    private V removeInSlot(int slotIndex, K key){
-        Entry<K,V> entry = searchEntryInSlot(slotIndex, key);
-        if(entry != null){
+    private V removeInSlot(int slotIndex, K key) {
+        Entry<K, V> entry = searchEntryInSlot(slotIndex, key);
+        if (entry != null) {
             V value = entry.value;
-            //since linkedlist and similar datastruture is actually a memeory address, like a pointer to particalur info.
-            //So remove the element in the new list that point to the same address will also work for the original list.
-            LinkedList<Entry<K,V>> links = slotArray[slotIndex];
+            // since linkedlist and similar datastruture is actually a memeory address, like
+            // a pointer to particalur info.
+            // So remove the element in the new list that point to the same address will
+            // also work for the original list.
+            LinkedList<Entry<K, V>> links = slotArray[slotIndex];
             links.remove(entry);
             size--;
             return value;
-        }else{
+        } else {
             return null;
         }
+    }
+
+    public V get(K key) {
+        if (key == null) {
+            return null;
+        }
+        int slotIndex = normalizeIndex(key.hashCode());
+        Entry<K, V> entry = searchEntryInSlot(slotIndex, key);
+        if (entry != null) {
+            return entry.value;
+        }
+        return null;
     }
 }
