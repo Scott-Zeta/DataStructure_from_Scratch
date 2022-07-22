@@ -137,29 +137,59 @@ public class Chain_HashTable<K, V> {
         return null;
     }
 
-    public V add(K key,V value){
-        if(key == null)throw new IllegalArgumentException("Key can not be null.");
-        Entry<K,V> newEntry = new Entry<>(key, value);
+    public V add(K key, V value) {
+        if (key == null)
+            throw new IllegalArgumentException("Key can not be null.");
+        Entry<K, V> newEntry = new Entry<>(key, value);
         int slotIndex = normalizeIndex(key.hashCode());
         return InsertSlot(slotIndex, newEntry);
     }
 
-    private V InsertSlot(int slotIndex, Entry<K,V> newEntry){
-        LinkedList<Entry<K,V>> targetSlot = slotArray[slotIndex];
-        if (targetSlot == null){
+    private V InsertSlot(int slotIndex, Entry<K, V> newEntry) {
+        LinkedList<Entry<K, V>> targetSlot = slotArray[slotIndex];
+        if (targetSlot == null) {
             slotArray[slotIndex] = new LinkedList<>();
             targetSlot = slotArray[slotIndex];
         }
-        Entry<K,V> currentEntry = searchEntryInSlot(slotIndex, newEntry.key);
-        //see if current Entry exsist
-        if(currentEntry == null){
+        Entry<K, V> currentEntry = searchEntryInSlot(slotIndex, newEntry.key);
+        // see if current Entry exsist
+        if (currentEntry == null) {
             targetSlot.add(newEntry);
+            size++;
+            if (size > threshold) {
+                resize(); // if most slots contians somethings, resize.
+            }
             return null;
-        }else{
+        } else {
             V oldValue = currentEntry.value;
             currentEntry.value = newEntry.value;
             System.out.println("exsist entry has been updated");
             return oldValue;
         }
+    }
+
+    private void resize() {
+        // update capcity and threshold value.
+        capacity *= 2;
+        threshold = (int) (capacity * maxLoadFactor);
+
+        LinkedList<Entry<K, V>>[] newSlotArray = new LinkedList[capacity];
+        for (int i = 0; i < slotArray.length; i++) {
+            if (slotArray[i] != null) {
+                for (Entry<K, V> entry : slotArray[i]) {
+                    int newSlotIndex = normalizeIndex(entry.hashCode);
+                    LinkedList<Entry<K, V>> slot = newSlotArray[newSlotIndex];
+                    if (slot == null) {
+                        newSlotArray[newSlotIndex] = slot = new LinkedList<>();
+                        slot.add(entry);
+                        // reloacate exsist entry into the new table by normlized into new slot index.
+                    }
+                }
+                // clean the old slot, release the memory
+                slotArray[i].clear();
+                slotArray[i] = null;
+            }
+        }
+        slotArray = newSlotArray;
     }
 }
