@@ -1,12 +1,9 @@
-import java.util.LinkedList;
-import java.util.ArrayList;
-
 public class Test {
     public static void main(String[] args) throws Exception {
-        Chain_HashTable<Integer,String> numToFruit = new Chain_HashTable<>();
+        Chain_HashTable<Integer, String> numToFruit = new Chain_HashTable<>();
         numToFruit.add(1, "Apple");
         numToFruit.add(2, "banana");
-        numToFruit.add(-20,"Tomato");
+        numToFruit.add(-20, "Tomato");
         System.out.println(numToFruit.isEmpty());
         System.out.println(numToFruit.toString());
         System.out.println(numToFruit.get(20));
