@@ -3,22 +3,22 @@ import java.util.ArrayList;
 
 public class Test {
     public static void main(String[] args) throws Exception {
-        LinkedList<String>[] listArray = new LinkedList[10];
-        listArray[1] = new LinkedList<>();
-        listArray[1].add("Apple");
-        System.out.println(listArray[1].contains("Apple"));
-        
-        LinkedList<String> copyList = listArray[1];
-        copyList.remove("Apple");
-        System.out.println(copyList.size());
-        System.out.println(listArray[1].size());
-        System.out.println(listArray[1].contains("Apple")); 
+        Chain_HashTable<Integer,String> numToFruit = new Chain_HashTable<>();
+        numToFruit.add(1, "Apple");
+        numToFruit.add(2, "banana");
+        numToFruit.add(-20,"Tomato");
+        System.out.println(numToFruit.isEmpty());
+        System.out.println(numToFruit.toString());
+        System.out.println(numToFruit.get(20));
+        System.out.println(numToFruit.get(-20));
+        System.out.println(numToFruit.containsKey(2));
+        System.out.println(numToFruit.values());
+        System.out.println(numToFruit.remove(1));
+        numToFruit.remove(2);
+        System.out.println(numToFruit.size());
+        System.out.println(numToFruit.keys());
+        numToFruit.clear();
+        System.out.println(numToFruit.toString());
         System.out.println("Done");
-
-        ArrayList<String> list2 = new ArrayList<>();
-        list2.add("Pear");
-        ArrayList<String> list2copy = list2;
-        list2copy.remove("Pear");
-        System.out.println(list2copy.contains("Pear"));
     }
 }

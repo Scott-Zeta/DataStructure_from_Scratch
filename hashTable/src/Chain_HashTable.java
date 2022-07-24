@@ -230,8 +230,8 @@ public class Chain_HashTable<K, V> {
                     result.append(entry.toString() + ", ");
                 }
             }
-            result.append("}");
         }
+        result.append("}");
         return result.toString();
     }
 }
