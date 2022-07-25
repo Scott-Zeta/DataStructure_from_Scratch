@@ -12,6 +12,9 @@ public class OpenAddress_HashTable<K, V> {
     private static final int Default_Capacity = 7;
     private static final double Default_Load_Factor = 0.65;
 
+    protected int size;//this does not include the tomb, they are the true key value, pair.
+    protected int usedSlot;//this include the tomb, the number shows how many slots in the array has been taken.
+
     // use a TombStone fake key as a token to take the place while deleting the key
     protected final K TombStone = (K) (new Object());
 
@@ -33,5 +36,19 @@ public class OpenAddress_HashTable<K, V> {
         //copied from chain hash table.
         keys = (K[]) new Object[capacity];
         values = (V[]) new Object[capacity];
+    }
+
+    private int normalizeIndex(int keyHash) {
+        return (keyHash & 0x7FFFFFFF) % capacity;
+        // strip off the negative number by bit operation &, then get the index of the
+        // slot by mod the key's hash code.
+    }
+    
+    public int size(){
+        return size;
+    }
+
+    public boolean isEmpty(){
+        return size() == 0;
     }
 }
