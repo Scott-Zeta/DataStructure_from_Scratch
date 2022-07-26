@@ -61,4 +61,17 @@ public class OpenAddress_HashTable<K, V> {
         size = 0;
         usedSlot = 0;
     }
+
+    @Override
+    public String toString(){
+        StringBuilder result = new StringBuilder();
+        result.append("{");
+        for (int i = 0 ; i < capacity; i++){
+            if(keys[i] != null && keys[i] != TombStone){
+                result.append(keys[i] + "->" + values[i] + ",");
+            }
+        }
+        result.append("}");
+        return result.toString();
+    }
 }
