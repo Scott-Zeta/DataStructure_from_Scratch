@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class OpenAddress_HashTable<K, V> {
+public abstract class OpenAddress_HashTable<K, V> {
     // open addressing can store in array dierectly but not a linkedList
     // So do not need to have entry class
     protected K[] keys;
@@ -74,4 +74,9 @@ public class OpenAddress_HashTable<K, V> {
         result.append("}");
         return result.toString();
     }
+
+    //abstract for different probing method
+    protected abstract void setupProbing(K key);
+    protected abstract int probe(int x);
+
 }
