@@ -63,11 +63,11 @@ public abstract class OpenAddress_HashTable<K, V> {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder result = new StringBuilder();
         result.append("{");
-        for (int i = 0 ; i < capacity; i++){
-            if(keys[i] != null && keys[i] != TombStone){
+        for (int i = 0; i < capacity; i++) {
+            if (keys[i] != null && keys[i] != TombStone) {
                 result.append(keys[i] + "->" + values[i] + ",");
             }
         }
@@ -75,8 +75,53 @@ public abstract class OpenAddress_HashTable<K, V> {
         return result.toString();
     }
 
-    //abstract for different probing method
-    protected abstract void setupProbing(K key);
+    // abstract for different probing method
     protected abstract int probe(int x);
 
+    protected void resize() {
+
+    }
+
+    protected V add(K key, V value) {
+        if (key == null)
+            throw new IllegalArgumentException("Null key");
+        if (usedSlot >= threshold) {
+            resize();
+        }
+
+        // regular insert slot without moving
+        final int slot = normalizeIndex(key.hashCode());
+
+        for (int i = slot, j = -1, x = 0;; i = normalizeIndex(slot + probe(x++))) {
+            // j, slot index of non-tombston, -1 if no tomb
+            // i=normlaizeIndex(slot + probe(x++)), iterate probing with increasing x,
+            // x start with 1.(first iterate without prob)
+            // I wonder why it doesn't start with 0.
+            if (keys[i] == TombStone) {
+                // if encouter the tomb.
+                if (j == -1) {
+                    // this is the first time encouter tomb
+                    j = i;
+                }
+            } else if (keys[i] != null) {
+                // 1. this is not the first time, but finally find the availible plauce
+                // the i should already be updated by
+                // the probe, i and j are not equal. i point to next possible j point
+                // to last i, which is the tomb
+                // 2. Also, may be never been met with the tomb.
+                if (keys[i].equals(key)) {
+                    // if the keys exist and equal, update
+                    V oldValue = values[i];
+                    if (j == -1) {
+                        // if never enconter tomb, update regularly
+                        values[i] = value;
+                    } else {
+                        // if last slot is a tomb
+                        //????????? why swap with last tombstone?
+                    }
+                    return oldValue;
+                }
+            }
+        }
+    }
 }
