@@ -117,10 +117,28 @@ public abstract class OpenAddress_HashTable<K, V> {
                         values[i] = value;
                     } else {
                         // if last slot is a tomb
-                        //????????? why swap with last tombstone?
+                        // ????????? why swap with last tombstone?
+                        keys[i] = TombStone;
+                        values[i] = null;
+                        keys[j] = key;
+                        values[j] = value;
                     }
                     return oldValue;
                 }
+            } else {
+                if (j == -1) {
+                    //tomb never been encounted
+                    usedSlot++;
+                    size++;
+                    keys[i] = key;
+                    values[i] = value;
+                } else {
+                    //insert at previous tomb
+                    size++;
+                    keys[j] = key;
+                    values[j] = value;
+                }
+                return null;
             }
         }
     }
