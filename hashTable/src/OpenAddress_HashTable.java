@@ -122,24 +122,57 @@ public abstract class OpenAddress_HashTable<K, V> {
                         values[i] = null;
                         keys[j] = key;
                         values[j] = value;
+                        // NB: swap tomb incase every iteration go through
+                        // too many tomb slowly
                     }
                     return oldValue;
                 }
             } else {
                 if (j == -1) {
-                    //tomb never been encounted
+                    // tomb never been encounted
                     usedSlot++;
                     size++;
                     keys[i] = key;
                     values[i] = value;
                 } else {
-                    //insert at previous tomb
+                    // insert at previous tomb
                     size++;
                     keys[j] = key;
                     values[j] = value;
                 }
                 return null;
             }
+        }
+    }
+
+    public boolean hasKey(K key) {
+        if (key == null)
+            throw new IllegalArgumentException("null key");
+
+        final int slot = normalizeIndex(key.hashCode());
+
+        for (int i = slot, j = -1, x = 1;; i = normalizeIndex(slot + probe(x++))) {
+            if (keys[i] == TombStone) {
+                // if hit tomb, i and j will keep update
+                if (j == -1)
+                    j = i;
+            } else if (keys[i] != null) {
+                // hit the non-tomb non-null key
+                if (keys[i].equals(key)) {
+                    // If j != -1 this means we previously encountered a deleted cell.
+                    // We can perform an optimization by swapping the entries in cells
+                    // i and j so that the next time we search for this key it will be
+                    // found faster. This is called lazy deletion/relocation
+                    if (j != -1) {
+                        keys[j] = keys[i];
+                        values[j] = values[i];
+                        keys[i] = TombStone;
+                        values[i] = null;
+                    }
+                    return true;
+                }
+            } else
+                return false;
         }
     }
 }
