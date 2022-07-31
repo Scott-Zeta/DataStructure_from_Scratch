@@ -175,4 +175,32 @@ public abstract class OpenAddress_HashTable<K, V> {
                 return false;
         }
     }
+
+    public V get(K key) {
+        if (key == null)
+            throw new IllegalArgumentException("Null key");
+
+        final int slot = normalizeIndex(key.hashCode());
+
+        for (int i = slot, j = -1, x = 1;; i = normalizeIndex(slot + probe(x++))) {
+            if (keys[i] == TombStone) {
+                if (j == -1)
+                    j = i;
+            } else if (keys[i] != null) {
+                if (keys[i].equals(key)) {
+                    if (j != -1) {
+                        // tomb relocation
+                        keys[j] = keys[i];
+                        values[j] = values[i];
+                        keys[i] = TombStone;
+                        values[i] = null;
+                        return values[j];
+                    } else {
+                        return values[i];
+                    }
+                }
+            } else
+                return null;
+        }
+    }
 }
